@@ -11,7 +11,12 @@ import './UserHome.css';
 const UserHome = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [tempStartDate, setTempStartDate] = useState('');
+  const [tempEndDate, setTempEndDate] = useState('');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [trendingScrollPosition, setTrendingScrollPosition] = useState(0);
   const [interestScrollPosition, setInterestScrollPosition] = useState(0);
 
@@ -45,23 +50,191 @@ const UserHome = () => {
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
 
-  // Set default date to today
+  // Initialize temp dates when calendar opens
   useEffect(() => {
+    if (showCalendar) {
+      setTempStartDate(startDate);
+      setTempEndDate(endDate);
+    }
+  }, [showCalendar, startDate, endDate]);
+
+  // Get today's date in YYYY-MM-DD format
+  const getTodayDate = () => {
     const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
-    setSelectedDate(formattedDate);
-  }, []);
+    return today.toISOString().split('T')[0];
+  };
+
+  // Check if a date is in the past
+  const isPastDate = (dateString) => {
+    const date = new Date(dateString);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
+  // Handle date input click
+  const handleDateInputClick = (e) => {
+    e.preventDefault();
+    setShowCalendar(!showCalendar);
+  };
+
+  // Close calendar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      const dateWrapper = document.querySelector('.date-input-wrapper');
+      const calendar = document.querySelector('.custom-calendar');
+      if (dateWrapper && !dateWrapper.contains(e.target) && 
+          calendar && !calendar.contains(e.target)) {
+        setShowCalendar(false);
+      }
+    };
+
+    if (showCalendar) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showCalendar]);
+
+  // Calendar functions
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return new Date(year, month + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return new Date(year, month, 1).getDay();
+  };
+
+  const formatDateToString = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const parseDateString = (dateString) => {
+    if (!dateString) return null;
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  const isDateInRange = (dateString, start, end) => {
+    if (!start || !end) return false;
+    const date = parseDateString(dateString);
+    const startDate = parseDateString(start);
+    const endDate = parseDateString(end);
+    if (!date || !startDate || !endDate) return false;
+    return date >= startDate && date <= endDate;
+  };
+
+  const handleDateClick = (day) => {
+    const dateString = formatDateToString(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day));
+    
+    if (isPastDate(dateString)) return;
+
+    if (!tempStartDate || (tempStartDate && tempEndDate)) {
+      // Start new selection
+      setTempStartDate(dateString);
+      setTempEndDate('');
+    } else if (tempStartDate && !tempEndDate) {
+      // Select end date
+      const start = parseDateString(tempStartDate);
+      const clicked = parseDateString(dateString);
+      if (clicked < start) {
+        // If clicked date is before start, make it the new start
+        setTempStartDate(dateString);
+        setTempEndDate(tempStartDate);
+      } else {
+        setTempEndDate(dateString);
+      }
+    }
+  };
+
+  const handleApply = () => {
+    setStartDate(tempStartDate);
+    setEndDate(tempEndDate);
+    setShowCalendar(false);
+  };
+
+  const handleReset = () => {
+    setTempStartDate('');
+    setTempEndDate('');
+    setStartDate('');
+    setEndDate('');
+  };
+
+  const handlePrevMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+  };
+
+  const renderCalendar = () => {
+    const daysInMonth = getDaysInMonth(currentMonth);
+    const firstDay = getFirstDayOfMonth(currentMonth);
+    const days = [];
+    const today = new Date();
+    const todayString = formatDateToString(today);
+
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+    }
+
+    // Add cells for each day of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateString = formatDateToString(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day));
+      const isPast = isPastDate(dateString);
+      const isStart = dateString === tempStartDate;
+      const isEnd = dateString === tempEndDate;
+      const isInRange = isDateInRange(dateString, tempStartDate, tempEndDate);
+      const isToday = dateString === todayString;
+
+      let className = 'calendar-day';
+      if (isPast) className += ' past-date';
+      if (isStart) className += ' start-date';
+      if (isEnd) className += ' end-date';
+      if (isInRange && !isStart && !isEnd) className += ' in-range';
+      if (isToday) className += ' today';
+
+      days.push(
+        <div
+          key={day}
+          className={className}
+          onClick={() => !isPast && handleDateClick(day)}
+        >
+          {day}
+        </div>
+      );
+    }
+
+    return days;
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
     // Handle search logic here
-    console.log('Search:', { query: searchQuery, date: selectedDate });
+    console.log('Search:', { query: searchQuery, startDate, endDate });
   };
 
-  const formatDisplayDate = (dateString) => {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const formatDisplayDate = (start, end) => {
+    if (!start && !end) return 'Select date';
+    if (start && !end) {
+      const date = new Date(start);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+    if (start && end) {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      return `${startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - ${endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+    }
+    return 'Select date';
   };
 
   const scrollTrendingCards = (direction) => {
@@ -134,22 +307,74 @@ const UserHome = () => {
             <div className="search-field">
               <label htmlFor="when">When</label>
               <div className="date-input-wrapper">
-                <input
-                  id="when"
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                />
-                <span className="date-display">{formatDisplayDate(selectedDate)}</span>
-                {selectedDate && (
+                <span className="date-display" onClick={handleDateInputClick}>
+                  {formatDisplayDate(startDate, endDate)}
+                </span>
+                {(startDate || endDate) && (
                   <button
                     type="button"
                     className="clear-date-btn"
-                    onClick={() => setSelectedDate('')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleReset();
+                    }}
                     aria-label="Clear date"
                   >
                     ×
                   </button>
+                )}
+                {showCalendar && (
+                  <div className="custom-calendar">
+                    <div className="calendar-header">
+                      <button 
+                        type="button" 
+                        className="calendar-nav-btn" 
+                        onClick={handlePrevMonth}
+                        aria-label="Previous month"
+                      >
+                        ‹
+                      </button>
+                      <h3 className="calendar-month-year">
+                        {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                      </h3>
+                      <button 
+                        type="button" 
+                        className="calendar-nav-btn" 
+                        onClick={handleNextMonth}
+                        aria-label="Next month"
+                      >
+                        ›
+                      </button>
+                    </div>
+                    <div className="calendar-weekdays">
+                      <div className="calendar-weekday">Sun</div>
+                      <div className="calendar-weekday">Mon</div>
+                      <div className="calendar-weekday">Tue</div>
+                      <div className="calendar-weekday">Wed</div>
+                      <div className="calendar-weekday">Thu</div>
+                      <div className="calendar-weekday">Fri</div>
+                      <div className="calendar-weekday">Sat</div>
+                    </div>
+                    <div className="calendar-days">
+                      {renderCalendar()}
+                    </div>
+                    <div className="calendar-actions">
+                      <button 
+                        type="button" 
+                        className="calendar-reset-btn"
+                        onClick={handleReset}
+                      >
+                        Reset
+                      </button>
+                      <button 
+                        type="button" 
+                        className="calendar-apply-btn"
+                        onClick={handleApply}
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
@@ -430,20 +655,7 @@ const UserHome = () => {
       </section>
 
       {/* Keep Things Flexible Section */}
-      <section className="flexible-section">
-        <div className="flexible-content">
-          <h2 className="flexible-title">Keep things flexible</h2>
-          <p className="flexible-description">
-            Use Reserve Now & Pay Later to secure the activities you don't want to miss without being locked in
-          </p>
-        </div>
-        <hr className="section-divider" />
-      </section>
-
-      {/* Blank Middle Section */}
-      <section className="blank-middle-section"></section>
-      <hr className="section-divider" />
-
+      
       {/* Free Cancellation Section */}
       <section className="cancellation-section">
         <div className="cancellation-content">
@@ -502,6 +714,7 @@ const UserHome = () => {
 
       {/* Image Share Section */}
       <section className="image-share-section">
+        <h2 className="image-share-title">Popular Experiences</h2>
         <div className="image-grid">
           <div className="image-card">
             <img src={uh1} alt="Adventure Experience 1" />

@@ -38,20 +38,7 @@ const UserFooter = () => {
       </div>
 
       {/* Rating Section */}
-      <div className="footer-rating">
-        <div className="rating-stars">
-          <span className="star filled">★</span>
-          <span className="star filled">★</span>
-          <span className="star filled">★</span>
-          <span className="star filled">★</span>
-          <span className="star half">★</span>
-        </div>
-        <span className="rating-text">4.4 rating | 296,164 reviews</span>
-        <div className="trustpilot">
-          <span className="trustpilot-star">★</span>
-          <span className="trustpilot-text">Trustpilot</span>
-        </div>
-      </div>
+    
 
       {/* Navigation Links */}
       <div className="footer-links">
@@ -60,11 +47,7 @@ const UserFooter = () => {
           <a href="/privacy">Privacy and Cookies Statement</a>
           <a href="/about">About Gatividhi</a>
         </div>
-        <div className="footer-column">
-          <a href="/careers">Careers</a>
-          <a href="/sitemap">Sitemap</a>
-          <a href="/supplier">Supplier Sign Up</a>
-        </div>
+        
         <div className="footer-column">
           <a href="/travel-agents">Travel Agents</a>
           <a href="/affiliate">Become an Affiliate</a>
@@ -82,21 +65,11 @@ const UserFooter = () => {
       {/* Bottom Section */}
       <div className="footer-bottom">
         <div className="footer-apps">
-          <a href="https://play.google.com" className="app-button google-play" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zm5.714 10.714l-6.071 3.571-3.571-3.571 3.571-3.571 6.071 3.571zm-9.071-5.714l6.071 3.571-6.071 3.571V5zm0 10v-3.571l6.071 3.571-6.071 3.571z"/>
-            </svg>
-            <span>GET IT ON<br />Google Play</span>
-          </a>
-          <a href="https://apps.apple.com" className="app-button app-store" target="_blank" rel="noopener noreferrer">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M13.5 2.5c.276 0 .5.224.5.5v14c0 .276-.224.5-.5.5h-7c-.276 0-.5-.224-.5-.5V3c0-.276.224-.5.5-.5h7zm-.5 1h-6v13h6V3.5zm-4 2c.276 0 .5.224.5.5s-.224.5-.5.5-.5-.224-.5-.5.224-.5.5-.5zm-1 3h2v1h-2v-1zm0 2h2v1h-2v-1zm0 2h1v1h-1v-1z"/>
-            </svg>
-            <span>Download on the<br />App Store</span>
-          </a>
+          
+         
         </div>
         <div className="footer-copyright">
-          <p>© 1997-2025 Gatividhi, Inc.</p>
+          <p>© 2024 Gatividhi, Inc.</p>
           <div className="footer-legal-links">
             <a href="/terms">Terms & Conditions</a>
             <a href="/how-it-works">How Gatividhi works</a>
