@@ -4,7 +4,6 @@ import UserFooter from '../../components/layout/UserFooter';
 import uh1 from '../../assets/images/uh1.jpg';
 import uh2 from '../../assets/images/uh2.jpg';
 import uh3 from '../../assets/images/uh3.jpg';
-import DropDown from '../../assets/icons/DropDown';
 import Like from '../../assets/icons/Like';
 import './UserHome.css';
 
@@ -17,8 +16,6 @@ const UserHome = () => {
   const [tempEndDate, setTempEndDate] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [trendingScrollPosition, setTrendingScrollPosition] = useState(0);
-  const [interestScrollPosition, setInterestScrollPosition] = useState(0);
 
   const backgroundImages = [uh1, uh2, uh3];
   
@@ -237,31 +234,6 @@ const UserHome = () => {
     return 'Select date';
   };
 
-  const scrollTrendingCards = (direction) => {
-    const cardWidth = 315; // Card width (300px) + gap (15px)
-    const cardsToScroll = 1; // Scroll one card at a time
-    const cardsVisible = 4; // Number of cards visible
-    const maxScroll = (tourCards.length - cardsVisible) * cardWidth;
-    
-    if (direction === 'left') {
-      setTrendingScrollPosition(Math.max(0, trendingScrollPosition - cardWidth * cardsToScroll));
-    } else {
-      setTrendingScrollPosition(Math.min(maxScroll, trendingScrollPosition + cardWidth * cardsToScroll));
-    }
-  };
-
-  const scrollInterestCards = (direction) => {
-    const cardWidth = 315; // Card width (300px) + gap (15px)
-    const cardsToScroll = 1; // Scroll one card at a time
-    const cardsVisible = 4; // Number of cards visible
-    const maxScroll = (tourCards.length - cardsVisible) * cardWidth;
-    
-    if (direction === 'left') {
-      setInterestScrollPosition(Math.max(0, interestScrollPosition - cardWidth * cardsToScroll));
-    } else {
-      setInterestScrollPosition(Math.min(maxScroll, interestScrollPosition + cardWidth * cardsToScroll));
-    }
-  };
 
   return (
     <div className="user-home">
@@ -456,12 +428,7 @@ const UserHome = () => {
       <section className="interest-section">
         <h2 className="interest-title">Based on your interest in New Delhi</h2>
         <div className="cards-container-wrapper">
-          {interestScrollPosition > 0 && (
-            <button className="scroll-button scroll-left" onClick={() => scrollInterestCards('left')} aria-label="Scroll left">
-              <DropDown style={{ transform: 'rotate(90deg)', width: '20px', height: '20px' }} />
-            </button>
-          )}
-          <div className="cards-container" style={{ transform: `translateX(-${interestScrollPosition}px)` }}>
+          <div className="cards-container">
             {tourCards.map((card) => (
               <div key={`interest-${card.id}`} className="tour-card">
                 <div className="tour-card-image-wrapper">
@@ -500,11 +467,6 @@ const UserHome = () => {
               </div>
             ))}
           </div>
-          {interestScrollPosition < (tourCards.length - 4) * 315 && (
-            <button className="scroll-button scroll-right" onClick={() => scrollInterestCards('right')} aria-label="Scroll right">
-              <DropDown style={{ transform: 'rotate(-90deg)', width: '20px', height: '20px' }} />
-            </button>
-          )}
         </div>
       </section>
 
@@ -599,12 +561,7 @@ const UserHome = () => {
       <section className="trending-section">
         <h2 className="trending-title">Top Experiences This Season</h2>
         <div className="cards-container-wrapper">
-          {trendingScrollPosition > 0 && (
-            <button className="scroll-button scroll-left" onClick={() => scrollTrendingCards('left')} aria-label="Scroll left">
-              <DropDown style={{ transform: 'rotate(90deg)', width: '20px', height: '20px' }} />
-            </button>
-          )}
-          <div className="cards-container" style={{ transform: `translateX(-${trendingScrollPosition}px)` }}>
+          <div className="cards-container">
             {tourCards.map((card) => (
               <div key={card.id} className="tour-card">
                 <div className="tour-card-image-wrapper">
@@ -643,11 +600,6 @@ const UserHome = () => {
               </div>
             ))}
           </div>
-          {trendingScrollPosition < (tourCards.length - 4) * 315 && (
-            <button className="scroll-button scroll-right" onClick={() => scrollTrendingCards('right')} aria-label="Scroll right">
-              <DropDown style={{ transform: 'rotate(-90deg)', width: '20px', height: '20px' }} />
-            </button>
-          )}
         </div>
       </section>
 
