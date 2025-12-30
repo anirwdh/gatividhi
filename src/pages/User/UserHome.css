@@ -635,6 +635,15 @@
   gap: 1.5rem;
   transition: transform 0.3s ease-in-out;
   padding: 0.5rem 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.cards-container::-webkit-scrollbar {
+  display: none;
 }
 
 .tour-card {
@@ -969,12 +978,11 @@
 
 .cancellation-description {
   font-size: 0.9rem;
-  margin-left: 12rem;
-  
   color: var(--color-text-primary, #212529);
   line-height: 1.6;
   text-align: center;
   max-width: 800px;
+  margin: 0 auto;
 }
 
 /* Customer Reviews Section */
@@ -1106,10 +1114,98 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-content {
+    padding: 0 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .destinations-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .tour-card {
+    flex: 0 0 280px;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-section {
-    height: 60vh;
-    min-height: 450px;
+    height: 55vh;
+    min-height: 400px;
+    margin-top: 60px;
+  }
+
+  .hero-content {
+    margin-top: 40px;
+    padding: 0 1rem;
+  }
+
+  .hero-title {
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-search-bar {
+    flex-direction: column;
+    padding: 0.75rem;
+    gap: 0;
+    border-radius: 16px;
+    max-width: 100%;
+  }
+
+  .search-field {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-light, #e9ecef);
+    padding: 0.75rem 1rem;
+  }
+
+  .search-field:last-of-type {
+    border-bottom: none;
+  }
+
+  .search-field label {
+    font-size: 0.65rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .search-field input {
+    font-size: 0.85rem;
+  }
+
+  .search-button {
+    width: 100%;
+    height: 44px;
+    margin-top: 0.5rem;
+    border-radius: 12px;
+  }
+
+  .carousel-indicators {
+    bottom: 1rem;
+    gap: 0.4rem;
+  }
+
+  .indicator {
+    width: 8px;
+    height: 8px;
+  }
+
+  .indicator.active {
+    width: 10px;
+    height: 10px;
   }
 
   .why-book-section {
@@ -1117,7 +1213,7 @@
   }
 
   .why-book-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
     margin-bottom: 2rem;
   }
 
@@ -1126,65 +1222,92 @@
     gap: 2rem;
   }
 
+  .feature-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1.25rem;
+  }
+
+  .feature-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-description {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
   .login-section {
     padding: 2rem 1.5rem;
   }
 
   .login-box {
     padding: 2rem 1.5rem;
+    margin: 0 auto 1.5rem;
   }
 
   .login-title {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
   }
 
-  .destinations-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
+  .signup-prompt {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
   }
 
-  .destinations-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
+  .login-button {
+    padding: 0.75rem 2rem;
+    font-size: 0.95rem;
+    max-width: 100%;
   }
 
-  .flexible-title,
-  .cancellation-title {
-    font-size: 1.75rem;
-  }
-
-  .flexible-section,
-  .cancellation-section,
-  .blank-middle-section {
+  .trending-section,
+  .interest-section {
     padding: 2.5rem 1.5rem;
   }
 
-  .flexible-description,
-  .cancellation-description {
-    font-size: 0.95rem;
-  }
-
-  .reviews-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .interest-section {
-    padding: 2rem 1rem;
-  }
-
+  .trending-title,
   .interest-title {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
+  .cards-container {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .tour-card {
-    flex: 0 0 280px;
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+  }
+
+  .tour-card-image-wrapper {
+    height: 180px;
+  }
+
+  .tour-card-content {
+    padding: 1rem;
+  }
+
+  .tour-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .price-current {
+    font-size: 1rem;
   }
 
   .scroll-button {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+    display: none; /* Hide scroll buttons on mobile, use touch scrolling instead */
   }
 
   .scroll-left {
@@ -1195,61 +1318,370 @@
     right: 0.5rem;
   }
 
-  .hero-title {
-    font-size: 2.5rem;
+  .top-destinations-section {
+    padding: 3rem 1.5rem;
   }
 
-  .hero-subtitle {
+  .destinations-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .destinations-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .destination-name {
     font-size: 1rem;
-    margin-bottom: 2rem;
   }
 
-  .hero-search-bar {
-    flex-direction: column;
-    padding: 1rem;
-    gap: 0;
-    border-radius: 50px;
+  .flexible-section,
+  .cancellation-section,
+  .blank-middle-section {
+    padding: 2.5rem 1.5rem;
   }
 
-  .search-field {
-    border-right: none;
-    border-bottom: 1px solid var(--color-border-light, #e9ecef);
-    padding: 1rem;
+  .flexible-title,
+  .cancellation-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
   }
 
-  .search-field:last-of-type {
-    border-bottom: none;
+  .flexible-description,
+  .cancellation-description {
+    font-size: 0.9rem;
   }
 
-  .search-button {
-    width: 100%;
-    height: 48px;
-    margin-top: 0.5rem;
-    border-radius: var(--radius-md, 0.5rem);
+  .reviews-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .review-card {
+    padding: 1.25rem;
+  }
+
+  .review-text {
+    font-size: 0.95rem;
+  }
+
+  .image-share-section {
+    padding: 3rem 1.5rem;
+  }
+
+  .image-share-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .image-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
+
+  .image-overlay {
+    padding: 1.5rem 1rem 1rem;
+  }
+
+  .image-overlay h3 {
+    font-size: 1.1rem;
+  }
+
+  .image-overlay p {
+    font-size: 0.85rem;
+  }
+
+  .custom-calendar {
+    min-width: 100%;
+    max-width: calc(100vw - 2rem);
+    left: 0 !important;
+    right: 0;
+    padding: 15px;
+  }
+
+  .calendar-header {
+    margin-bottom: 15px;
+  }
+
+  .calendar-month-year {
+    font-size: 16px;
+  }
+
+  .calendar-nav-btn {
+    font-size: 20px;
+    padding: 4px 8px;
+  }
+
+  .calendar-weekday {
+    font-size: 11px;
+    padding: 6px 0;
+  }
+
+  .calendar-day {
+    min-width: 36px;
+    min-height: 36px;
+    font-size: 13px;
+  }
+
+  .calendar-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+
+  .calendar-reset-btn,
+  .calendar-apply-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 480px) {
-  .hero-title {
-    font-size: 2rem;
+  .hero-section {
+    height: 50vh;
+    min-height: 350px;
   }
 
   .hero-content {
-    padding: 0 1rem;
+    margin-top: 30px;
+    padding: 0 0.75rem;
   }
 
-  .image-share-section {
+  .hero-title {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-search-bar {
+    padding: 0.5rem;
+    border-radius: 12px;
+  }
+
+  .search-field {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .search-field label {
+    font-size: 0.6rem;
+  }
+
+  .search-field input {
+    font-size: 0.8rem;
+  }
+
+  .search-button {
+    height: 40px;
+    margin-top: 0.4rem;
+  }
+
+  .why-book-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .why-book-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .features-grid {
+    gap: 1.5rem;
+  }
+
+  .feature-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+  }
+
+  .feature-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .feature-title {
+    font-size: 1rem;
+  }
+
+  .feature-description {
+    font-size: 0.85rem;
+  }
+
+  .login-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .login-box {
+    padding: 1.5rem 1rem;
+  }
+
+  .login-title {
+    font-size: 1.25rem;
+  }
+
+  .signup-prompt {
+    font-size: 0.8rem;
+  }
+
+  .trending-section,
+  .interest-section {
     padding: 2rem 1rem;
   }
 
+  .trending-title,
+  .interest-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .cards-container {
+    padding: 0.5rem 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .tour-card {
+    flex: 0 0 240px;
+    scroll-snap-align: start;
+  }
+
+  .tour-card-image-wrapper {
+    height: 160px;
+  }
+
+  .tour-card-content {
+    padding: 0.875rem;
+  }
+
+  .tour-location {
+    font-size: 0.8rem;
+  }
+
+  .tour-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .price-current {
+    font-size: 0.95rem;
+  }
+
+  .price-note {
+    font-size: 0.75rem;
+  }
+
+  .scroll-button {
+    width: 32px;
+    height: 32px;
+    display: none; /* Hide scroll buttons on mobile, use touch scrolling instead */
+  }
+
+  .scroll-left {
+    left: 0.25rem;
+  }
+
+  .scroll-right {
+    right: 0.25rem;
+  }
+
+  .top-destinations-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .destinations-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .destinations-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .destination-name {
+    font-size: 0.95rem;
+  }
+
+  .flexible-section,
+  .cancellation-section,
+  .blank-middle-section {
+    padding: 2rem 1rem;
+  }
+
+  .flexible-title,
+  .cancellation-title {
+    font-size: 1.25rem;
+  }
+
+  .flexible-description,
+  .cancellation-description {
+    font-size: 0.85rem;
+  }
+
+  .reviews-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .review-card {
+    padding: 1rem;
+  }
+
+  .review-text {
+    font-size: 0.9rem;
+  }
+
+  .image-share-section {
+    padding: 2.5rem 1rem;
+  }
+
   .image-share-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .image-grid {
+    gap: 1.25rem;
+  }
+
+  .custom-calendar {
+    padding: 12px;
+  }
+
+  .calendar-day {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-title {
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .tour-card {
+    flex: 0 0 220px;
+  }
+
+  .why-book-title,
+  .trending-title,
+  .interest-title,
+  .destinations-title,
+  .flexible-title,
+  .cancellation-title,
+  .image-share-title {
+    font-size: 1.1rem;
   }
 }
 
