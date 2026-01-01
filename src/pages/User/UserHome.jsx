@@ -16,6 +16,7 @@ const UserHome = () => {
   const [tempEndDate, setTempEndDate] = useState('');
   const [showCalendar, setShowCalendar] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [showMobileModal, setShowMobileModal] = useState(false);
 
   const backgroundImages = [uh1, uh2, uh3];
   
@@ -220,6 +221,16 @@ const UserHome = () => {
     console.log('Search:', { query: searchQuery, startDate, endDate });
   };
 
+  const handleMobileSearchClick = (e) => {
+    e.preventDefault();
+    setShowMobileModal(true);
+  };
+
+  const handleCloseMobileModal = () => {
+    setShowMobileModal(false);
+    setShowCalendar(false);
+  };
+
   const formatDisplayDate = (start, end) => {
     if (!start && !end) return 'Select date';
     if (start && !end) {
@@ -265,7 +276,8 @@ const UserHome = () => {
 
           {/* Search Bar */}
           <form className="hero-search-bar" onSubmit={handleSearch}>
-            <div className="search-field">
+            {/* Desktop Search Fields */}
+            <div className="search-field desktop-search-field">
               <label htmlFor="where-to">Where to?</label>
               <input
                 id="where-to"
@@ -276,7 +288,7 @@ const UserHome = () => {
               />
             </div>
 
-            <div className="search-field">
+            <div className="search-field desktop-search-field">
               <label htmlFor="when">When</label>
               <div className="date-input-wrapper">
                 <span className="date-display" onClick={handleDateInputClick}>
@@ -351,13 +363,142 @@ const UserHome = () => {
               </div>
             </div>
 
-            <button type="submit" className="search-button" aria-label="Search">
+            {/* Mobile Simplified Search Bar */}
+            <div className="mobile-search-field" onClick={handleMobileSearchClick}>
+              <svg className="mobile-search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <span className="mobile-search-text">Search for a place or activity</span>
+            </div>
+
+            <button type="submit" className="search-button desktop-search-button" aria-label="Search">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
               </svg>
             </button>
           </form>
+
+          {/* Mobile Modal */}
+          {showMobileModal && (
+            <div className="mobile-search-modal-overlay" onClick={handleCloseMobileModal}>
+              <div className="mobile-search-modal" onClick={(e) => e.stopPropagation()}>
+                <div className="mobile-modal-header">
+                  <h2>Search & Select Dates</h2>
+                  <button 
+                    className="mobile-modal-close" 
+                    onClick={handleCloseMobileModal}
+                    aria-label="Close modal"
+                  >
+                    ×
+                  </button>
+                </div>
+                <div className="mobile-modal-content">
+                  <div className="mobile-search-field-input">
+                    <label htmlFor="mobile-where-to">Where to?</label>
+                    <input
+                      id="mobile-where-to"
+                      type="text"
+                      placeholder="Search for a place or activity"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="mobile-search-field-input">
+                    <label htmlFor="mobile-when">When</label>
+                    <div className="date-input-wrapper">
+                      <span className="date-display" onClick={handleDateInputClick}>
+                        {formatDisplayDate(startDate, endDate)}
+                      </span>
+                      {(startDate || endDate) && (
+                        <button
+                          type="button"
+                          className="clear-date-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleReset();
+                          }}
+                          aria-label="Clear date"
+                        >
+                          ×
+                        </button>
+                      )}
+                      {showCalendar && (
+                        <div className="custom-calendar mobile-calendar">
+                          <div className="calendar-header">
+                            <button 
+                              type="button" 
+                              className="calendar-nav-btn" 
+                              onClick={handlePrevMonth}
+                              aria-label="Previous month"
+                            >
+                              ‹
+                            </button>
+                            <h3 className="calendar-month-year">
+                              {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                            </h3>
+                            <button 
+                              type="button" 
+                              className="calendar-nav-btn" 
+                              onClick={handleNextMonth}
+                              aria-label="Next month"
+                            >
+                              ›
+                            </button>
+                          </div>
+                          <div className="calendar-weekdays">
+                            <div className="calendar-weekday">Sun</div>
+                            <div className="calendar-weekday">Mon</div>
+                            <div className="calendar-weekday">Tue</div>
+                            <div className="calendar-weekday">Wed</div>
+                            <div className="calendar-weekday">Thu</div>
+                            <div className="calendar-weekday">Fri</div>
+                            <div className="calendar-weekday">Sat</div>
+                          </div>
+                          <div className="calendar-days">
+                            {renderCalendar()}
+                          </div>
+                          <div className="calendar-actions">
+                            <button 
+                              type="button" 
+                              className="calendar-reset-btn"
+                              onClick={handleReset}
+                            >
+                              Reset
+                            </button>
+                            <button 
+                              type="button" 
+                              className="calendar-apply-btn"
+                              onClick={() => {
+                                handleApply();
+                                handleCloseMobileModal();
+                              }}
+                            >
+                              Apply
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <button 
+                    type="button" 
+                    className="mobile-search-submit" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSearch(e);
+                      handleCloseMobileModal();
+                    }}
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
