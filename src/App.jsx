@@ -1,11 +1,17 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { UserHome } from './pages';
+import { UserHome, UserAllActivitiesScreen } from './pages';
 import './App.css';
 
 function App() {
   return (
     <AuthProvider>
-      <UserHome />
+      <Router>
+        <Routes>
+          <Route path="/" element={<UserHome />} />
+          <Route path="/activities" element={<UserAllActivitiesScreen />} />
+        </Routes>
+      </Router>
     </AuthProvider>
   );
 }

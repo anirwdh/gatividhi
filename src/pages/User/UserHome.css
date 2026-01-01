@@ -906,6 +906,7 @@
   aspect-ratio: 4 / 3;
   cursor: pointer;
   transition: transform var(--transition-base, 250ms);
+  user-select: none;
 }
 
 .destination-card:hover {

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserHeader from '../../components/layout/UserHeader';
 import UserFooter from '../../components/layout/UserFooter';
 import uh1 from '../../assets/images/uh1.jpg';
@@ -8,6 +9,7 @@ import Like from '../../assets/icons/Like';
 import './UserHome.css';
 
 const UserHome = () => {
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -217,8 +219,14 @@ const UserHome = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Handle search logic here
-    console.log('Search:', { query: searchQuery, startDate, endDate });
+    // Navigate to activities screen with search query
+    navigate('/activities', { 
+      state: { 
+        searchQuery, 
+        startDate, 
+        endDate 
+      } 
+    });
   };
 
   const handleMobileSearchClick = (e) => {
@@ -615,7 +623,10 @@ const UserHome = () => {
       <section className="top-destinations-section">
         <h2 className="destinations-title">Top Destinations</h2>
         <div className="destinations-grid">
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'Las Vegas' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh1})` }}
@@ -623,7 +634,10 @@ const UserHome = () => {
               <span className="destination-name">Las Vegas</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'Rome' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh2})` }}
@@ -631,7 +645,10 @@ const UserHome = () => {
               <span className="destination-name">Rome</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'Paris' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh3})` }}
@@ -639,7 +656,10 @@ const UserHome = () => {
               <span className="destination-name">Paris</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'London' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh1})` }}
@@ -647,7 +667,10 @@ const UserHome = () => {
               <span className="destination-name">London</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'New York City' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh2})` }}
@@ -655,7 +678,10 @@ const UserHome = () => {
               <span className="destination-name">New York City</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'Washington DC' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh3})` }}
@@ -663,7 +689,10 @@ const UserHome = () => {
               <span className="destination-name">Washington DC</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'Cancun' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh1})` }}
@@ -671,7 +700,10 @@ const UserHome = () => {
               <span className="destination-name">Cancun</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'Florence' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh2})` }}
@@ -679,7 +711,10 @@ const UserHome = () => {
               <span className="destination-name">Florence</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'Barcelona' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh3})` }}
@@ -687,7 +722,10 @@ const UserHome = () => {
               <span className="destination-name">Barcelona</span>
             </div>
           </div>
-          <div className="destination-card">
+          <div 
+            className="destination-card"
+            onClick={() => navigate('/activities', { state: { destination: 'Oahu' } })}
+          >
             <div 
               className="destination-image"
               style={{ backgroundImage: `url(${uh1})` }}

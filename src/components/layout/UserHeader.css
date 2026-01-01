@@ -27,17 +27,21 @@
 }
 
 .user-header-logo {
+  
+  
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.1rem;
   text-decoration: none;
   color: var(--color-text-primary, #212529);
-  font-weight: 600;
+  font-weight: 800;
   font-size: 1.25rem;
 }
 
+
 .logo-image {
-  height: 50px;
+ margin-left: 0px;
+  height: 100px;
   width: auto;
   object-fit: contain;
 }
@@ -49,7 +53,7 @@
 .user-header-nav {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap:0rem;
 }
 
 .nav-item {
