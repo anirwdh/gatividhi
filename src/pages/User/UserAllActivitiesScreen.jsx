@@ -328,7 +328,7 @@ const UserAllActivitiesScreen = () => {
           {navigationState.destination 
             ? `All ${navigationState.destination} Tours & Excursions in 2026`
             : navigationState.searchQuery
-            ? `Search Results for "${navigationState.searchQuery}"`
+            ? `All ${navigationState.searchQuery.charAt(0).toUpperCase() + navigationState.searchQuery.slice(1)} Tours & Excursions in 2026`
             : 'All Rome Tours & Excursions in 2026'}
         </h1>
 
