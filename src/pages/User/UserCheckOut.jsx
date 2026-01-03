@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import UserHeader from '../../components/layout/UserHeader';
 import UserFooter from '../../components/layout/UserFooter';
@@ -33,6 +33,11 @@ const UserCheckOut = () => {
   
   // Section visibility state
   const [activeSection, setActiveSection] = useState(1); // 1 = contact, 2 = activity, 3 = payment
+
+  // Scroll to top when component mounts or location changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
 
   // Calculate total price
   const calculateTotalPrice = () => {

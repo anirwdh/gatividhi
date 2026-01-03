@@ -186,6 +186,11 @@ const UserDetailAcitivityScreen = () => {
     setCurrentImageIndex(index);
   };
 
+  // Scroll to top when component mounts or location changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
   // Handle sticky navigation
   useEffect(() => {
     const handleScroll = () => {

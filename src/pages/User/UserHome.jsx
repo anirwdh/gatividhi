@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import UserHeader from '../../components/layout/UserHeader';
 import UserFooter from '../../components/layout/UserFooter';
 import uh1 from '../../assets/images/uh1.jpg';
@@ -11,6 +11,7 @@ import './UserHome.css';
 
 const UserHome = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -41,6 +42,11 @@ const UserHome = () => {
     { id: 14, title: "Delhi Architecture Tour: Modern and Historical Buildings", location: "New Delhi, India", rating: 4.9, reviews: 1234, price: 2999, image: uh2 },
     { id: 15, title: "Delhi Rickshaw Tour: Explore Old Delhi's Narrow Lanes", location: "New Delhi, India", rating: 5.0, reviews: 1876, price: 1999, image: uh3 },
   ];
+
+  // Scroll to top when component mounts or location changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
 
   // Auto-rotate background images
   useEffect(() => {
