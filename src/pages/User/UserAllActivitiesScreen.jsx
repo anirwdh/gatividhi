@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import UserHeader from '../../components/layout/UserHeader';
 import UserFooter from '../../components/layout/UserFooter';
 import uh1 from '../../assets/images/uh1.jpg';
@@ -10,6 +10,7 @@ import './UserAllActivitiesScreen.css';
 
 const UserAllActivitiesScreen = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const navigationState = location.state || {};
   
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -501,7 +502,12 @@ const UserAllActivitiesScreen = () => {
         {/* Tour Cards Grid */}
         <div className="tour-cards-grid">
           {currentPageCards.map((card) => (
-            <div key={card.id} className="activity-card">
+            <div 
+              key={card.id} 
+              className="activity-card"
+              onClick={() => navigate(`/activity/${card.id}`, { state: { activityData: card } })}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="activity-card-image-wrapper">
                 <div 
                   className="activity-card-image"
@@ -513,7 +519,14 @@ const UserAllActivitiesScreen = () => {
                   {card.likelyToSellOut && (
                     <span className="card-badge likely-sellout">Likely to Sell Out</span>
                   )}
-                  <button className="heart-icon" aria-label="Save">
+                  <button 
+                    className="heart-icon" 
+                    aria-label="Save"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      // Handle wishlist toggle
+                    }}
+                  >
                     <Like />
                   </button>
                 </div>

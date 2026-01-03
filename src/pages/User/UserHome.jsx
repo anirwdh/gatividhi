@@ -5,6 +5,7 @@ import UserFooter from '../../components/layout/UserFooter';
 import uh1 from '../../assets/images/uh1.jpg';
 import uh2 from '../../assets/images/uh2.jpg';
 import uh3 from '../../assets/images/uh3.jpg';
+import uh4 from '../../assets/images/uh4.jpg';
 import Like from '../../assets/icons/Like';
 import './UserHome.css';
 
@@ -20,7 +21,7 @@ const UserHome = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [showMobileModal, setShowMobileModal] = useState(false);
 
-  const backgroundImages = [uh1, uh2, uh3];
+  const backgroundImages = [uh1, uh4, uh2, uh3];
   
   // Tour cards data - will come from backend later
   const tourCards = [
@@ -579,7 +580,12 @@ const UserHome = () => {
         <div className="cards-container-wrapper">
           <div className="cards-container">
             {tourCards.map((card) => (
-              <div key={`interest-${card.id}`} className="tour-card">
+              <div 
+                key={`interest-${card.id}`} 
+                className="tour-card"
+                onClick={() => navigate(`/activity/${card.id}`, { state: { activityData: card } })}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className="tour-card-image-wrapper">
                   <div 
                     className="tour-card-image"
@@ -588,7 +594,14 @@ const UserHome = () => {
                     {card.specialOffer && (
                       <span className="special-offer-badge">Special Offer</span>
                     )}
-                    <button className="heart-icon" aria-label="Save">
+                    <button 
+                      className="heart-icon" 
+                      aria-label="Save"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // Handle wishlist toggle
+                      }}
+                    >
                       <Like />
                     </button>
                   </div>
@@ -742,7 +755,12 @@ const UserHome = () => {
         <div className="cards-container-wrapper">
           <div className="cards-container">
             {tourCards.map((card) => (
-              <div key={card.id} className="tour-card">
+              <div 
+                key={card.id} 
+                className="tour-card"
+                onClick={() => navigate(`/activity/${card.id}`, { state: { activityData: card } })}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className="tour-card-image-wrapper">
                   <div 
                     className="tour-card-image"
@@ -751,7 +769,14 @@ const UserHome = () => {
                     {card.specialOffer && (
                       <span className="special-offer-badge">Special Offer</span>
                     )}
-                    <button className="heart-icon" aria-label="Save">
+                    <button 
+                      className="heart-icon" 
+                      aria-label="Save"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // Handle wishlist toggle
+                      }}
+                    >
                       <Like />
                     </button>
                   </div>
