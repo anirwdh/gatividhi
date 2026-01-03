@@ -602,7 +602,7 @@ const UserDetailAcitivityScreen = () => {
           {showAvailability && (
             <>
               <div className="availability-section">
-                <div className="best-seller-badge">Best seller</div>
+                 
                 <h2 className="activity-booking-title">Vatican Group - English</h2>
                 <p className="activity-booking-description">
                   Vatican Museums, Sistine Chapel & St. Peter's Basilica tour with English-speaking guide & small group of 20 people or less.
