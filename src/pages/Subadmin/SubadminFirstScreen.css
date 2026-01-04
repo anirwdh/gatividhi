@@ -1,0 +1,443 @@
+.subadmin-first-screen {
+  min-height: 60vh;
+  background-color: var(--color-bg-primary, #ffffff);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Section */
+.subadmin-hero {
+  width: 100%;
+  height: 80vh;
+  background-color: #e0f8fc;
+  padding: 120px 0 80px;
+  margin-top: -10px; /* Account for fixed header */
+  position: relative;
+}
+
+.subadmin-hero-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 100%;
+  position: relative;
+}
+
+.subadmin-hero-content {
+  display: flex;
+  align-items: center;
+  min-height: 500px;
+  height: 100%;
+  position: relative;
+}
+
+.subadmin-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 600px;
+  z-index: 2;
+  position: relative;
+}
+
+.subadmin-hero-title {
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text-primary, #212529);
+  margin: 0;
+}
+
+.subadmin-hero-title .highlight-green {
+  color: #127ea5;
+}
+
+.subadmin-hero-description {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #6c757d);
+  margin: 0;
+}
+
+.subadmin-hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-signup,
+.btn-signin {
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  position: relative;
+}
+
+.btn-signup {
+  background: linear-gradient(135deg, #ffffff 0%, #a8d5e8 30%, #2f92c7 70%, #127ea5 100%);
+  color: white;
+  border: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-signup:hover {
+  background: linear-gradient(135deg, #ffffff 0%, #8fc8e0 20%, #2585b8 70%, #08407c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 146, 199, 0.4);
+}
+
+.btn-signin {
+  background-color: white;
+  color: #2f92c7;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.btn-signin::before {
+  content: '';
+  position: absolute;
+ 
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #ffffff 0%, #a8d5e8 30%, #2f92c7 70%, #127ea5 100%);
+  z-index: -1;
+}
+
+
+
+
+
+.subadmin-hero-right {
+  position: absolute;
+  right: -3rem;
+  top: 3;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 110%;
+  z-index: 1;
+}
+
+.subadmin-hero-image-wrapper {
+  position: relative;
+  height: 100%;
+  max-width: 600px;
+  filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.2));
+}
+
+.subadmin-hero-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Why Join Section */
+.why-join-section {
+  padding: 5rem 2rem;
+  background-color: var(--color-bg-primary, #ffffff);
+}
+
+.why-join-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.why-join-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #212529);
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem 2rem;
+}
+
+.benefit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.benefit-icon {
+  width: 26px;
+  height: 26px;
+  color: #2a8bae;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.benefit-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.benefit-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary, #212529);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.benefit-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #6c757d);
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .subadmin-hero {
+    height: auto;
+    padding: 100px 0 60px;
+  }
+
+  .subadmin-hero-container {
+    padding: 0 1.5rem;
+  }
+
+  .subadmin-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    min-height: auto;
+    height: auto;
+  }
+
+  .subadmin-hero-left {
+    max-width: 100%;
+    order: 1;
+  }
+
+  .subadmin-hero-right {
+    position: relative;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    transform: none;
+    justify-content: center;
+    order: 2;
+    height: auto;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .subadmin-hero-image-wrapper {
+    max-width: 100%;
+    height: 400px;
+    width: 100%;
+  }
+
+  .subadmin-hero-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .subadmin-hero-title {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .subadmin-hero-description {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .subadmin-hero-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .subadmin-hero {
+    padding: 80px 0 40px;
+    height: auto;
+  }
+
+  .subadmin-hero-container {
+    padding: 0 1rem;
+  }
+
+  .subadmin-hero-content {
+    gap: 2rem;
+  }
+
+  .subadmin-hero-left {
+    order: 1;
+  }
+
+  .subadmin-hero-right {
+    order: 2;
+    margin-top: 1.5rem;
+  }
+
+  .subadmin-hero-title {
+    font-size: 2rem;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .subadmin-hero-description {
+    font-size: 0.95rem;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .subadmin-hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn-signup,
+  .btn-signin {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .subadmin-hero-image-wrapper {
+    max-width: 100%;
+    height: 280px;
+    width: 100%;
+  }
+
+  .subadmin-hero-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+  }
+
+  .why-join-section {
+    padding: 3rem 1rem;
+  }
+
+  .why-join-title {
+    font-size: 1.75rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.3;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .benefit-card {
+    text-align: center;
+    align-items: center;
+  }
+
+  .benefit-icon {
+    margin-bottom: 1rem;
+  }
+
+  .benefit-title {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .benefit-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .subadmin-hero {
+    padding: 70px 0 30px;
+  }
+
+  .subadmin-hero-container {
+    padding: 0 0.75rem;
+  }
+
+  .subadmin-hero-content {
+    gap: 1.5rem;
+  }
+
+  .subadmin-hero-title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+  }
+
+  .subadmin-hero-description {
+    font-size: 0.875rem;
+  }
+
+  .subadmin-hero-buttons {
+    margin-top: 1rem;
+    gap: 0.625rem;
+  }
+
+  .btn-signup,
+  .btn-signin {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .subadmin-hero-image-wrapper {
+    height: 250px;
+  }
+
+  .why-join-section {
+    padding: 2.5rem 0.75rem;
+  }
+
+  .why-join-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .benefits-grid {
+    gap: 1.5rem;
+  }
+
+  .benefit-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 0.875rem;
+  }
+
+  .benefit-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .benefit-title {
+    font-size: 1rem;
+  }
+
+  .benefit-description {
+    font-size: 0.85rem;
+  }
+}

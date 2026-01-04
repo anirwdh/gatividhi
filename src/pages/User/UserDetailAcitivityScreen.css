@@ -302,22 +302,23 @@
 
 .book-now-btn {
   padding: 0.875rem 2rem;
-  background: #005A9C;
+  background: linear-gradient(135deg, #ffffff 0%, #8fc8e0 20%, #2585b8 70%, #08407c 100%);
   color: white;
   border: none;
   border-radius: var(--radius-md, 0.5rem);
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
   width: auto;
   min-width: 150px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .book-now-btn:hover {
-  background: #004a7c;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 90, 156, 0.3);
+  background: linear-gradient(135deg, #ffffff 0%, #8fc8e0 20%, #2585b8 70%, #08407c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 146, 199, 0.4);
 }
 
 /* Image Gallery */
@@ -1211,20 +1212,21 @@ margin-top: 10%;
 .check-availability-btn-new {
   width: 100%;
   padding: 0.875rem;
-  background: #005A9C;
+  background: linear-gradient(135deg, #ffffff 0%, #8fc8e0 20%, #2585b8 50%, #08407c 110%);
   color: white;
   border: none;
   border-radius: var(--radius-md, 0.5rem);
   font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .check-availability-btn-new:hover {
-  background: #004a7c;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+  background: linear-gradient(135deg, #ffffff 0%, #8fc8e0 20%, #2585b8 70%, #08407c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 146, 199, 0.4);
 }
 
 .cancellation-info-new {
@@ -2131,7 +2133,7 @@ margin-top: 10%;
     padding: 0.875rem;
     font-size: 0.9375rem;
     font-weight: 600;
-    background: #005A9C;
+    background: linear-gradient(135deg, #ffffff 0%, #a8d5e8 30%, #2f92c7 70%, #127ea5 100%);
     margin-top: 0;
   }
 

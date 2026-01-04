@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './UserFooter.css';
 
 const UserFooter = () => {
@@ -44,12 +45,12 @@ const UserFooter = () => {
       <div className="footer-links">
         <div className="footer-column">
           <a href="/help">Help Center</a>
-          <a href="/privacy">Privacy and Cookies Statement</a>
-          <a href="/about">About Gatividhi</a>
+          <Link to="/privacy">Privacy and Cookies Statement</Link>
+          <Link to="/about">About Gatividhi</Link>
         </div>
         
         <div className="footer-column">
-          <a href="/travel-agents">Travel Agents</a>
+          <Link to="/travel-agents">Travel Agents</Link>
           <a href="/affiliate">Become an Affiliate</a>
           <a href="/news">News</a>
         </div>
