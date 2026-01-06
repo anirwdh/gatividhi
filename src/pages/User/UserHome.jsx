@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import UserHeader from '../../components/layout/UserHeader';
 import UserFooter from '../../components/layout/UserFooter';
 import uh1 from '../../assets/images/uh1.jpg';
@@ -573,9 +573,14 @@ const UserHome = () => {
         <div className="login-box">
           <h2 className="login-title">Log in to manage bookings & Gatividhi Rewards</h2>
           <p className="signup-prompt">
-            Don't have an account yet? <a href="/signup" className="signup-link">Sign up</a>
+            Don't have an account yet? <Link to="/register" className="signup-link">Sign up</Link>
           </p>
-          <button className="login-button">Log in</button>
+          <button 
+            className="login-button"
+            onClick={() => navigate('/login')}
+          >
+            Log in
+          </button>
         </div>
        
       </section>

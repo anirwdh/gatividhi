@@ -84,6 +84,13 @@
   position: relative;
 }
 
+.filter-buttons-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 0 0 auto;
+}
+
 .filter-btn {
   display: flex;
   align-items: center;
@@ -746,17 +753,30 @@
     margin: 0 -1rem;
     padding: 0 1rem;
     top: 0;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 999;
   }
 
   .filter-bar {
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
     gap: 0.75rem;
     padding: 0.75rem 0;
+  }
+
+  .filter-buttons-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    flex-wrap: nowrap;
   }
 
   .filter-btn {
     font-size: 0.8rem;
     padding: 0.5rem 0.75rem;
+    flex: 0 0 auto;
   }
 
   .date-btn,
@@ -770,11 +790,23 @@
 
   .filter-tags-container {
     width: 100%;
-    order: 4;
+    margin: 0;
+    overflow: visible;
+    flex: 0 0 auto;
   }
 
   .filter-tags {
     gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0.25rem 0;
+  }
+
+  .filter-tags::-webkit-scrollbar {
+    display: none;
   }
 
   .filter-tag {
@@ -848,7 +880,20 @@
     font-size: 1.25rem;
   }
 
+  .filter-bar-container {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+  }
+
   .filter-bar {
+    gap: 0.5rem;
+  }
+
+  .filter-buttons-row {
     gap: 0.5rem;
   }
 
