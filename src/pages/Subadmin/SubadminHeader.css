@@ -1,0 +1,235 @@
+.subadmin-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 1030;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.subadmin-header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.subadmin-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.subadmin-header-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.subadmin-logo-image {
+  height: 92px;
+  width: auto;
+  object-fit: contain;
+}
+
+.subadmin-header-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.subadmin-nav-link {
+  background: none;
+  border: none;
+  color: #717171;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.2s ease;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.subadmin-nav-link:hover {
+  color: #484848;
+}
+
+.subadmin-nav-link.active {
+  color: #484848;
+  font-weight: 600;
+}
+
+.subadmin-nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #484848;
+}
+
+.subadmin-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.subadmin-switch-btn {
+  background: none;
+  border: none;
+  color: #484848;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  transition: color 0.2s ease;
+}
+
+.subadmin-switch-btn:hover {
+  color: #000000;
+}
+
+.subadmin-user-menu {
+  position: relative;
+}
+
+.subadmin-profile-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.subadmin-profile-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.subadmin-profile-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #717171;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+
+.subadmin-profile-avatar svg {
+  width: 20px;
+  height: 20px;
+}
+
+.subadmin-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  padding: 0.5rem 0;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.subadmin-dropdown-menu a {
+  display: block;
+  padding: 0.75rem 1.25rem;
+  color: #484848;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.subadmin-dropdown-menu a:hover {
+  background-color: #f7f7f7;
+}
+
+.subadmin-dropdown-menu hr {
+  margin: 0.5rem 0;
+  border: none;
+  border-top: 1px solid #e0e0e0;
+}
+
+.subadmin-menu-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #484848;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subadmin-menu-btn:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.subadmin-menu-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .subadmin-header-nav {
+    gap: 1.5rem;
+  }
+
+  .subadmin-nav-link {
+    font-size: 0.875rem;
+  }
+
+  .subadmin-switch-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .subadmin-header-container {
+    padding: 0 1rem;
+  }
+
+  .subadmin-header-nav {
+    gap: 1rem;
+  }
+
+  .subadmin-nav-link {
+    font-size: 0.8125rem;
+  }
+
+  .subadmin-logo-image {
+    height: 28px;
+  }
+}
+

@@ -1,0 +1,12 @@
+.subadmin-dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f7f7f7;
+}
+
+.subadmin-dashboard-content {
+  flex: 1;
+  padding-top: 64px;
+}
+

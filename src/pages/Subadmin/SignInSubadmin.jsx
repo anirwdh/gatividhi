@@ -81,7 +81,7 @@ const SignInSubadmin = () => {
       // Handle form submission
       console.log('Form submitted:', showOTP ? { email: formData.email, otp } : formData);
       // Navigate to dashboard or handle login
-      // navigate('/subadmin/dashboard');
+      navigate('/subadmin/home');
     } else {
       console.log('Validation failed. Errors:', errors);
     }
