@@ -7,7 +7,7 @@ import './SubAdminDetailListing.css';
 const SubAdminDetailListing = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeSection, setActiveSection] = useState('images');
+  const [activeSection, setActiveSection] = useState('dateOptions');
   const fileInputRef = useRef(null);
 
   // Get listing data from navigation state or use sample data
@@ -118,6 +118,35 @@ const SubAdminDetailListing = () => {
     }
   };
 
+  // Helper function to format date
+  const formatDateToString = (date) => {
+    if (!date) return '';
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  // Initialize daily pricing
+  const initializeDailyPricing = () => {
+    const defaultPrice = listingData.price || 1700;
+    const pricing = {};
+    const today = new Date();
+    for (let i = 0; i < 90; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      const dateString = formatDateToString(date);
+      pricing[dateString] = {
+        price: defaultPrice + Math.floor(Math.random() * 300) - 150, // Varied pricing
+        available: true,
+        reserved: false
+      };
+    }
+    // Mark Jan 1 as reserved as example
+    pricing['2026-01-01'] = { price: defaultPrice, reserved: true, available: false };
+    return pricing;
+  };
+
   const [formData, setFormData] = useState(listingData);
   const [errors, setErrors] = useState({});
   const [currentTimeSlot, setCurrentTimeSlot] = useState('');
@@ -126,6 +155,14 @@ const SubAdminDetailListing = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [hasChanges, setHasChanges] = useState({});
   const [originalData, setOriginalData] = useState(listingData);
+  
+  // Calendar pricing and availability states
+  const [calendarMonth, setCalendarMonth] = useState(new Date());
+  const [selectedCalendarDate, setSelectedCalendarDate] = useState(null);
+  const [dailyPricing, setDailyPricing] = useState(initializeDailyPricing());
+  const [selectedDatePrice, setSelectedDatePrice] = useState(String(listingData.price || 1700));
+  const [selectedDateAvailable, setSelectedDateAvailable] = useState(true);
+  const [showMonthDropdown, setShowMonthDropdown] = useState(false);
 
   const startDateRef = useRef(null);
   const endDateRef = useRef(null);
@@ -322,12 +359,152 @@ const SubAdminDetailListing = () => {
     return new Date(year, month, 1).getDay();
   };
 
-  const formatDateToString = (date) => {
-    if (!date) return '';
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  // Generate months for dropdown (current year and next year)
+  const getMonthOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const months = [];
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    const currentMonthIndex = new Date().getMonth();
+    
+    // Current year - from current month onwards
+    for (let i = currentMonthIndex; i < 12; i++) {
+      months.push({ 
+        value: i, 
+        label: `${monthNames[i]} ${currentYear}`, 
+        year: currentYear, 
+        month: i 
+      });
+    }
+    
+    // Next year - all months
+    for (let i = 0; i < 12; i++) {
+      months.push({ 
+        value: i, 
+        label: `${monthNames[i]} ${currentYear + 1}`, 
+        year: currentYear + 1, 
+        month: i 
+      });
+    }
+    
+    return months;
+  };
+
+  const handleMonthSelect = (year, month) => {
+    setCalendarMonth(new Date(year, month, 1));
+    setShowMonthDropdown(false);
+  };
+
+  // Calendar pricing functions
+  const handleCalendarDateClick = (day) => {
+    const dateString = formatDateToString(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), day));
+    if (isPastDate(dateString)) return;
+    
+    console.log('Date clicked:', dateString); // Debug
+    setSelectedCalendarDate(dateString);
+    
+    // Immediately update price and availability for selected date
+    const dayData = dailyPricing[dateString] || { 
+      price: formData.price || 1700, 
+      available: true, 
+      reserved: false 
+    };
+    setSelectedDatePrice(String(dayData.price || formData.price || 1700));
+    setSelectedDateAvailable(dayData.available && !dayData.reserved);
+  };
+
+  const handleSaveDayPrice = () => {
+    if (!selectedCalendarDate) return;
+    
+    const newPrice = parseInt(selectedDatePrice) || formData.price || 1700;
+    const updatedPricing = {
+      ...dailyPricing,
+      [selectedCalendarDate]: {
+        price: newPrice,
+        available: selectedDateAvailable,
+        reserved: !selectedDateAvailable
+      }
+    };
+    
+    setDailyPricing(updatedPricing);
+    
+    setHasChanges(prev => ({
+      ...prev,
+      [`dailyPricing.${selectedCalendarDate}`]: true
+    }));
+    
+    // Clear unsaved changes for this date after save
+    setTimeout(() => {
+      setHasChanges(prev => {
+        const newChanges = { ...prev };
+        delete newChanges[`dailyPricing.${selectedCalendarDate}`];
+        return newChanges;
+      });
+    }, 100);
+  };
+
+  const handleToggleDayAvailability = () => {
+    setSelectedDateAvailable(!selectedDateAvailable);
+  };
+
+  const handleCalendarPrevMonth = () => {
+    setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1));
+  };
+
+  const handleCalendarNextMonth = () => {
+    setCalendarMonth(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1));
+  };
+
+  const renderCalendarWithPricing = () => {
+    const daysInMonth = getDaysInMonth(calendarMonth);
+    const firstDay = getFirstDayOfMonth(calendarMonth);
+    const days = [];
+    const today = new Date();
+    const todayString = formatDateToString(today);
+
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="pricing-calendar-day empty"></div>);
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateString = formatDateToString(new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), day));
+      const isPast = isPastDate(dateString);
+      const isSelected = dateString === selectedCalendarDate;
+      const dayData = dailyPricing[dateString] || { price: formData.price || 1700, available: true, reserved: false };
+      const isToday = dateString === todayString;
+
+      let className = 'pricing-calendar-day';
+      if (isPast) className += ' past-date';
+      if (isSelected) className += ' selected-date';
+      if (isToday && !isSelected) className += ' today';
+      if (dayData.reserved) className += ' reserved-date';
+
+      days.push(
+        <div
+          key={day}
+          className={className}
+          onClick={() => !isPast && handleCalendarDateClick(day)}
+        >
+          <div className="pricing-calendar-day-content">
+            <div className="pricing-calendar-day-number">{day}</div>
+            {!isPast && !dayData.reserved && (
+              <div className="pricing-calendar-day-price">
+                <span className="price-amount">₹{(dayData.price || formData.price || 1700).toLocaleString('en-IN')}</span>
+                <svg className="price-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </div>
+            )}
+            {dayData.reserved && (
+              <div className="pricing-calendar-day-reserved">Reserved</div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    return days;
   };
 
   const parseDateString = (dateString) => {
@@ -407,9 +584,33 @@ const SubAdminDetailListing = () => {
     return days;
   };
 
-  // Close calendar when clicking outside
+  // Update selected date price when calendar date changes
+  useEffect(() => {
+    if (selectedCalendarDate) {
+      const dayData = dailyPricing[selectedCalendarDate] || { 
+        price: formData.price || 1700, 
+        available: true, 
+        reserved: false 
+      };
+      setSelectedDatePrice(dayData.price || formData.price || 1700);
+      setSelectedDateAvailable(dayData.available && !dayData.reserved);
+    }
+  }, [selectedCalendarDate, dailyPricing, formData.price]);
+
+  // Update calendar when dailyPricing changes (to reflect saved prices)
+  useEffect(() => {
+    // This ensures the calendar re-renders when prices are updated
+  }, [dailyPricing]);
+
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
+      // Close month dropdown
+      if (showMonthDropdown && !e.target.closest('.calendar-month-selector-wrapper')) {
+        setShowMonthDropdown(false);
+      }
+      
+      // Close start/end date calendars
       if (startDateRef.current && !startDateRef.current.contains(e.target)) {
         const calendar = document.querySelector('.start-date-calendar');
         if (calendar && !calendar.contains(e.target)) {
@@ -424,11 +625,11 @@ const SubAdminDetailListing = () => {
       }
     };
 
-    if (showStartCalendar || showEndCalendar) {
+    if (showMonthDropdown || showStartCalendar || showEndCalendar) {
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
-  }, [showStartCalendar, showEndCalendar]);
+  }, [showMonthDropdown, showStartCalendar, showEndCalendar]);
 
   // Handle save for specific field
   const handleSaveField = (fieldName) => {
@@ -860,7 +1061,192 @@ const SubAdminDetailListing = () => {
               </label>
             </div>
 
-            {!formData.dateOptions?.everyday && !formData.dateOptions?.everyWeekend && (
+            {formData.dateOptions?.everyday ? (
+              <div className="calendar-pricing-container">
+                <div className={`calendar-pricing-main ${selectedCalendarDate ? 'with-panel' : 'without-panel'}`}>
+                  {/* Calendar View */}
+                  <div className="calendar-pricing-view">
+                    <div className="calendar-pricing-header">
+                      <div className="calendar-header-left">
+                        <div className="calendar-month-selector">
+                          <div className="calendar-month-selector-wrapper">
+                            <h2 className="calendar-month-title">
+                              {calendarMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                            </h2>
+                            <button 
+                              type="button" 
+                              className="calendar-month-dropdown-btn"
+                              onClick={() => setShowMonthDropdown(!showMonthDropdown)}
+                              aria-label="Change month"
+                            >
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                              </svg>
+                            </button>
+                            {showMonthDropdown && (
+                              <div className="calendar-month-dropdown-menu">
+                                {getMonthOptions().map((option, index) => (
+                                  <button
+                                    key={index}
+                                    type="button"
+                                    className={`calendar-month-option ${calendarMonth.getFullYear() === option.year && calendarMonth.getMonth() === option.month ? 'active' : ''}`}
+                                    onClick={() => handleMonthSelect(option.year, option.month)}
+                                  >
+                                    {option.label}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="calendar-view-options">
+                          <button className="calendar-view-btn active">Month</button>
+                          <button className="calendar-view-btn calendar-grid-btn" aria-label="Grid view">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <rect x="3" y="3" width="7" height="7"></rect>
+                              <rect x="14" y="3" width="7" height="7"></rect>
+                              <rect x="14" y="14" width="7" height="7"></rect>
+                              <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      {selectedCalendarDate && (
+                        <div className="calendar-selected-date-badge">
+                          <span>
+                            {parseDateString(selectedCalendarDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </span>
+                          <button 
+                            type="button"
+                            className="calendar-close-date-btn"
+                            onClick={() => setSelectedCalendarDate(null)}
+                            aria-label="Close"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="pricing-calendar-wrapper">
+                      <div className="pricing-calendar-nav">
+                        <button 
+                          type="button" 
+                          className="pricing-calendar-nav-btn"
+                          onClick={handleCalendarPrevMonth}
+                          aria-label="Previous month"
+                        >
+                          ‹
+                        </button>
+                        <button 
+                          type="button" 
+                          className="pricing-calendar-nav-btn"
+                          onClick={handleCalendarNextMonth}
+                          aria-label="Next month"
+                        >
+                          ›
+                        </button>
+                      </div>
+                      
+                      <div className="pricing-calendar">
+                        <div className="pricing-calendar-weekdays">
+                          <div className="pricing-calendar-weekday">Sun</div>
+                          <div className="pricing-calendar-weekday">Mon</div>
+                          <div className="pricing-calendar-weekday">Tue</div>
+                          <div className="pricing-calendar-weekday">Wed</div>
+                          <div className="pricing-calendar-weekday">Thu</div>
+                          <div className="pricing-calendar-weekday">Fri</div>
+                          <div className="pricing-calendar-weekday">Sat</div>
+                        </div>
+                        <div className="pricing-calendar-days-grid">
+                          {renderCalendarWithPricing()}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Control Panel - Shown when date is selected */}
+                  {selectedCalendarDate && (
+                    <div className="calendar-control-panel" key={selectedCalendarDate}>
+                      <div className="control-panel-header-section">
+                        <div className="control-panel-header-title-wrapper">
+                          <div>
+                            <h3 className="control-panel-title">
+                              {parseDateString(selectedCalendarDate).toLocaleDateString('en-US', { 
+                                weekday: 'long', 
+                                month: 'long', 
+                                day: 'numeric',
+                                year: 'numeric'
+                              })}
+                            </h3>
+                            <p className="control-panel-subtitle">Manage pricing and availability</p>
+                          </div>
+                          <button 
+                            type="button"
+                            className="control-panel-close-btn"
+                            onClick={() => setSelectedCalendarDate(null)}
+                            aria-label="Close panel"
+                          >
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <line x1="18" y1="6" x2="6" y2="18"></line>
+                              <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="control-panel-section control-panel-availability">
+                        <div className="control-panel-header">
+                          <div className="availability-status">
+                            <span className="availability-label">Available</span>
+                            {selectedDateAvailable && (
+                              <span className="availability-dot"></span>
+                            )}
+                          </div>
+                          <label className="availability-toggle-label">
+                            <input
+                              type="checkbox"
+                              checked={selectedDateAvailable}
+                              onChange={handleToggleDayAvailability}
+                              className="availability-toggle-checkbox"
+                            />
+                            <div className="availability-toggle-switch">
+                              <div className="toggle-switch-icon toggle-switch-x">×</div>
+                              <div className="toggle-switch-icon toggle-switch-check">✓</div>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="control-panel-section control-panel-price-section">
+                        <label className="control-panel-label">Price per night</label>
+                        <div className="control-panel-price-input-wrapper">
+                          <span className="control-panel-currency">₹</span>
+                          <input
+                            type="number"
+                            value={selectedDatePrice}
+                            onChange={(e) => setSelectedDatePrice(e.target.value)}
+                            className="control-panel-price-input"
+                            placeholder="1700"
+                            min="0"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="control-panel-actions">
+                        <button 
+                          type="button"
+                          className="control-panel-save-btn"
+                          onClick={handleSaveDayPrice}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : !formData.dateOptions?.everyWeekend ? (
               <div className="detail-date-range-section">
                 <div className="detail-date-inputs-row">
                   <div className="detail-form-group detail-date-field-group" ref={startDateRef}>
@@ -956,7 +1342,7 @@ const SubAdminDetailListing = () => {
                   </div>
                 </div>
               </div>
-            )}
+            ) : null}
           </div>
         );
 
@@ -1061,9 +1447,9 @@ const SubAdminDetailListing = () => {
     <div className="subadmin-detail-listing-page">
       <SubadminHeader activeTab="listings" setActiveTab={() => {}} />
       
-      <div className="detail-listing-container">
+      <div className={`detail-listing-container ${selectedCalendarDate ? 'sidebar-hidden' : ''}`}>
         {/* Left Sidebar */}
-        <aside className="detail-sidebar">
+        <aside className={`detail-sidebar ${selectedCalendarDate ? 'hidden' : ''}`}>
           <div className="detail-sidebar-header">
             <button 
               className="detail-back-btn"

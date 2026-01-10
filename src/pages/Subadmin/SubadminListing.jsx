@@ -18,7 +18,33 @@ const SubadminListing = ({ onNavigateToCreate }) => {
         title: 'Bungee Jumping in Rishikesh',
         price: 3790,
         originalPrice: null,
-        date: 'Started on 15 January 2026'
+        date: 'Started on 15 January 2026',
+        dateOptions: {
+          everyday: true,
+          everyWeekend: false
+        },
+        propertyType: 'Adventure Activity',
+        availability: '1-365 night stays',
+        advanceNotice: 'Same-day advance notice',
+        guests: 2,
+        description: 'Experience the thrill of bungee jumping from India\'s highest platform in Rishikesh. This exhilarating adventure activity takes you 83 meters above the ground, offering breathtaking views of the surrounding mountains and the Ganges River.',
+        images: [
+          'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400',
+          'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400',
+          'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400'
+        ],
+        included: ['Professional guide', 'Safety equipment'],
+        notIncluded: ['Transportation'],
+        departurePoint: 'Jumpin Heights',
+        dropPoint: 'Jumpin Heights',
+        itinerary: [{title: 'Briefing', description: '...', duration: '...', admission: '...'}],
+        timeSlots: ['8:00 AM'],
+        itineraryIntro: '...',
+        contactInfo: {
+          email: 'contact@jumpinheights.com',
+          phone: '+91 9876543210',
+          website: 'https://www.jumpinheights.com'
+        }
       },
       {
         id: 2,
