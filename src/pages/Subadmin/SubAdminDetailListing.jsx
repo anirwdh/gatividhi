@@ -1195,6 +1195,16 @@ const SubAdminDetailListing = () => {
                         </div>
                       </div>
 
+                      <div className="control-panel-actions">
+                        <button 
+                          type="button"
+                          className="control-panel-save-btn"
+                          onClick={handleSaveDayPrice}
+                        >
+                          Save
+                        </button>
+                      </div>
+
                       <div className="control-panel-section control-panel-availability">
                         <div className="control-panel-header">
                           <div className="availability-status">
@@ -1231,16 +1241,6 @@ const SubAdminDetailListing = () => {
                             min="0"
                           />
                         </div>
-                      </div>
-
-                      <div className="control-panel-actions">
-                        <button 
-                          type="button"
-                          className="control-panel-save-btn"
-                          onClick={handleSaveDayPrice}
-                        >
-                          Save
-                        </button>
                       </div>
                     </div>
                   )}

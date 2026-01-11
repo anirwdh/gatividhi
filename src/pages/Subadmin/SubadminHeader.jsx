@@ -45,12 +45,7 @@ const SubadminHeader = ({ activeTab, setActiveTab }) => {
           >
             Bookings
           </Link>
-          <Link 
-            to="/subadmin/messages" 
-            className={`subadmin-nav-link ${location.pathname === '/subadmin/messages' ? 'active' : ''}`}
-          >
-            Quries
-          </Link>
+       
         </nav>
 
         {/* Right side - Actions */}

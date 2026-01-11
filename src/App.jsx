@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { UserHome, UserAllActivitiesScreen, UserDetailAcitivityScreen, UserCheckOut, SubadminFirstScreen, SignUpSubAdmin, SignInSubadmin, SubadminHome, SubAdminDetailListing, AboutScreen, PrivacyScreen } from './pages';
+import { UserHome, UserAllActivitiesScreen, UserDetailAcitivityScreen, UserCheckOut, SubadminFirstScreen, SignUpSubAdmin, SignInSubadmin, SubadminHome, SubAdminDetailListing, SubadminBooking, AboutScreen, PrivacyScreen } from './pages';
 import './App.css';
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
           <Route path="/subadmin/listings" element={<SubadminHome />} />
           <Route path="/subadmin/calendar" element={<SubadminHome />} />
           <Route path="/subadmin/listing-detail" element={<SubAdminDetailListing />} />
+          <Route path="/subadmin/bookings" element={<SubadminBooking />} />
           <Route path="/about" element={<AboutScreen />} />
           <Route path="/privacy" element={<PrivacyScreen />} />
         </Routes>

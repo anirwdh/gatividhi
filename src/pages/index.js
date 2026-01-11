@@ -9,6 +9,7 @@ export { default as SignInSubadmin } from './Subadmin/SignInSubadmin';
 export { default as SubadminHome } from './Subadmin/SubadminHome';
 export { default as SubadminListing } from './Subadmin/SubadminListing';
 export { default as SubAdminDetailListing } from './Subadmin/SubAdminDetailListing';
+export { default as SubadminBooking } from './Subadmin/SubadminBooking';
 export { default as AboutScreen } from './Common/AboutScreen';
 export { default as PrivacyScreen } from './Common/PrivacyScreen';
 // export { default as ToursPage } from './ToursPage';
