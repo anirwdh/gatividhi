@@ -13,6 +13,7 @@ function App() {
           <Route path="/activity/:id" element={<UserDetailAcitivityScreen />} />
           <Route path="/checkout" element={<UserCheckOut />} />
           <Route path="/travel-agents" element={<SubadminFirstScreen />} />
+          <Route path="/Partner" element={<SubadminFirstScreen />} />
           <Route path="/subadmin/signup" element={<SignUpSubAdmin />} />
           <Route path="/subadmin/signin" element={<SignInSubadmin />} />
           <Route path="/subadmin/home" element={<SubadminHome />} />
