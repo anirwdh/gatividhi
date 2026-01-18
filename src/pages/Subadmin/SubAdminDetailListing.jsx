@@ -4,7 +4,7 @@ import SubadminHeader from './SubadminHeader';
 import SubadminFooter from './SubadminFooter';
 import './SubAdminDetailListing.css';
 
-const SubAdminDetailListing = () => {
+const SubAdminDetailListing = ({ isEmbedded = false, onDelete, backPath = '/subadmin/listings' }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [activeSection, setActiveSection] = useState('dateOptions');
@@ -1445,7 +1445,7 @@ const SubAdminDetailListing = () => {
 
   return (
     <div className="subadmin-detail-listing-page">
-      <SubadminHeader activeTab="listings" setActiveTab={() => {}} />
+      {!isEmbedded && <SubadminHeader activeTab="listings" setActiveTab={() => {}} />}
       
       <div className={`detail-listing-container ${selectedCalendarDate ? 'sidebar-hidden' : ''}`}>
         {/* Left Sidebar */}
@@ -1453,7 +1453,7 @@ const SubAdminDetailListing = () => {
           <div className="detail-sidebar-header">
             <button 
               className="detail-back-btn"
-              onClick={() => navigate('/subadmin/listings')}
+              onClick={() => navigate(backPath)}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="15 18 9 12 15 6"></polyline>
@@ -1622,6 +1622,17 @@ const SubAdminDetailListing = () => {
                 {formData.contactInfo?.email ? 'Configured' : 'Not configured'}
               </p>
             </div>
+
+            {onDelete && (
+              <div 
+                className="detail-preview-card simple delete-card"
+                onClick={onDelete}
+                style={{ marginTop: '20px', border: '1px solid #ef4444', cursor: 'pointer' }}
+              >
+                <h3 className="preview-card-title" style={{ color: '#ef4444' }}>Delete Listing</h3>
+                <p className="preview-card-text-small">Permanently remove this listing</p>
+              </div>
+            )}
           </nav>
         </aside>
 
@@ -1642,7 +1653,7 @@ const SubAdminDetailListing = () => {
         </main>
       </div>
 
-      <SubadminFooter />
+      {!isEmbedded && <SubadminFooter />}
     </div>
   );
 };

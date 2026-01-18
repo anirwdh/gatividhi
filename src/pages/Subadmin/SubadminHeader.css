@@ -221,15 +221,282 @@
   }
 
   .subadmin-header-nav {
-    gap: 1rem;
+    display: none; /* Hide desktop navigation on mobile */
   }
 
-  .subadmin-nav-link {
-    font-size: 0.8125rem;
+  .subadmin-logo-image {
+    height: 32px;
+  }
+
+  /* Mobile Menu Button */
+  .subadmin-menu-btn {
+    display: flex;
+  }
+
+  /* Mobile Menu */
+  .subadmin-mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 16px rgba(0, 0, 0, 0.15);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .subadmin-mobile-menu.open {
+    right: 0;
+  }
+
+  .subadmin-mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1035;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+
+  .subadmin-mobile-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: #f8f9fa;
+  }
+
+  .subadmin-mobile-menu-logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .subadmin-mobile-menu-logo .subadmin-logo-image {
+    height: 28px;
+  }
+
+  .subadmin-mobile-menu-close {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .subadmin-mobile-menu-close:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .subadmin-mobile-menu-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .subadmin-mobile-nav {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .subadmin-mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    text-decoration: none;
+    color: #484848;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .subadmin-mobile-nav-link:hover {
+    background-color: #f8f9fa;
+    color: #000000;
+  }
+
+  .subadmin-mobile-nav-link.active {
+    background-color: #e8f4f8;
+    color: #2a8bae;
+    font-weight: 600;
+  }
+
+  .subadmin-mobile-nav-link svg {
+    flex-shrink: 0;
+  }
+
+  .subadmin-mobile-menu-footer {
+    padding: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background: #f8f9fa;
+  }
+
+  .subadmin-mobile-user-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .subadmin-mobile-user-section .subadmin-profile-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: #2a8bae;
+  }
+
+  .subadmin-mobile-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .subadmin-mobile-user-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+
+  .subadmin-mobile-user-role {
+    font-size: 0.75rem;
+    color: #717171;
+  }
+
+  .subadmin-mobile-menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .subadmin-mobile-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-decoration: none;
+    color: #484848;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .subadmin-mobile-action-btn:hover {
+    background-color: #f8f9fa;
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .subadmin-mobile-action-btn.logout {
+    color: #dc3545;
+    border-color: #dc3545;
+  }
+
+  .subadmin-mobile-action-btn.logout:hover {
+    background-color: #fee;
+    color: #c82333;
+  }
+
+  /* User menu adjustments for mobile */
+  .subadmin-user-menu {
+    position: static;
+  }
+
+  .subadmin-dropdown-menu {
+    display: none; /* Hide desktop dropdown on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .subadmin-header-container {
+    padding: 0 0.75rem;
+    height: 56px;
   }
 
   .subadmin-logo-image {
     height: 28px;
+  }
+
+  .subadmin-mobile-menu {
+    width: 85%;
+    max-width: 280px;
+  }
+
+  .subadmin-mobile-menu-header {
+    padding: 0.75rem;
+  }
+
+  .subadmin-mobile-menu-logo .subadmin-logo-image {
+    height: 24px;
+  }
+
+  .subadmin-mobile-nav {
+    padding: 0.75rem;
+  }
+
+  .subadmin-mobile-nav-link {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .subadmin-mobile-menu-footer {
+    padding: 0.75rem;
+  }
+
+  .subadmin-mobile-user-section {
+    padding: 0.5rem;
+  }
+
+  .subadmin-mobile-user-section .subadmin-profile-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .subadmin-mobile-user-name {
+    font-size: 0.875rem;
+  }
+
+  .subadmin-mobile-user-role {
+    font-size: 0.7rem;
+  }
+
+  .subadmin-mobile-action-btn {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Show mobile menu button only on mobile */
+@media (min-width: 769px) {
+  .subadmin-menu-btn {
+    display: none;
+  }
+
+  .subadmin-mobile-menu,
+  .subadmin-mobile-menu-overlay {
+    display: none;
   }
 }
 

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { UserHome, UserAllActivitiesScreen, UserDetailAcitivityScreen, UserCheckOut, SubadminFirstScreen, SignUpSubAdmin, SignInSubadmin, SubadminHome, SubAdminDetailListing, SubadminBooking, AboutScreen, PrivacyScreen } from './pages';
+import { UserHome, UserAllActivitiesScreen, UserDetailAcitivityScreen, UserCheckOut, SubadminFirstScreen, SignUpSubAdmin, SignInSubadmin, SubadminHome, SubAdminDetailListing, SubadminBooking, AboutScreen, PrivacyScreen, AdminLoginComponent, SubAdminPackageListings, AdminDetailListing, TeamLoginComponent, TeamListingDetail, EditBooking } from './pages';
 import './App.css';
 
 function App() {
@@ -21,6 +21,13 @@ function App() {
           <Route path="/subadmin/calendar" element={<SubadminHome />} />
           <Route path="/subadmin/listing-detail" element={<SubAdminDetailListing />} />
           <Route path="/subadmin/bookings" element={<SubadminBooking />} />
+          <Route path="/admin" element={<AdminLoginComponent />} />
+          <Route path="/gatividhiteam" element={<TeamLoginComponent />} />
+          <Route path="/gatividhiteam/listing-detail" element={<TeamListingDetail />} />
+          <Route path="/gatividhiteam/edit-booking" element={<EditBooking />} />
+          <Route path="/admin/subadmin-packages" element={<SubAdminPackageListings />} />
+          <Route path="/admin/subadmin/:id/packages" element={<SubAdminPackageListings />} />
+          <Route path="/admin/listing-detail" element={<AdminDetailListing />} />
           <Route path="/about" element={<AboutScreen />} />
           <Route path="/privacy" element={<PrivacyScreen />} />
         </Routes>

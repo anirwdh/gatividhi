@@ -1,0 +1,20 @@
+/* Import all the same styles as AdminHome for consistent UI */
+@import '../Admin/AdminHome.css';
+
+/* Override sidebar height to expand to full content height */
+.form-sidebar {
+  height: auto !important;
+  min-height: calc(100vh - 120px) !important;
+  max-height: none !important;
+}
+
+/* Booking row hover effect */
+.booking-row {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.booking-row:hover {
+  background-color: rgba(79, 70, 229, 0.1) !important;
+  transform: translateX(5px);
+}

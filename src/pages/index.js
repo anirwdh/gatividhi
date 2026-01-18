@@ -12,7 +12,14 @@ export { default as SubAdminDetailListing } from './Subadmin/SubAdminDetailListi
 export { default as SubadminBooking } from './Subadmin/SubadminBooking';
 export { default as AboutScreen } from './Common/AboutScreen';
 export { default as PrivacyScreen } from './Common/PrivacyScreen';
+export { default as AdminHome } from './Admin/AdminHome';
+export { default as AdminLoginComponent } from './Admin/AdminLoginComponent';
+export { default as SubAdminPackageListings } from './Admin/SubAdminPackageListings';
+export { default as AdminDetailListing } from './Admin/DetailListing';
+export { default as TeamLoginComponent } from './Team/TeamLoginComponent';
+export { default as TeamHome } from './Team/TeamHome';
+export { default as TeamListingDetail } from './Team/TeamListingDetail';
+export { default as EditBooking } from './Team/EditBooking';
 // export { default as ToursPage } from './ToursPage';
 // export { default as TourDetailPage } from './TourDetailPage';
 // export { default as BookingPage } from './BookingPage';
-
